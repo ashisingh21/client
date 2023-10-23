@@ -15,6 +15,7 @@ import CreateCategory from './Pages/Admin/CreateCategory';
 import CreateProduct from './Pages/Admin/CreateProduct';
 import Users from './Pages/Admin/Users';
 import AllProduct from './Pages/Admin/AllProducts';
+import Product from './Pages/Product';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path='admin/users' element={<Users />}></Route>
         </Route>
         <Route path='/contact' element={<Contact />}></Route>
+        <Route path='/product/:id' element={<Product />}></Route>
 
         <Route path='/register' element={<Register />}></Route>
         <Route path='/login' element={<Login />}></Route>
