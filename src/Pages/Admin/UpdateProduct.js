@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AdminDashboard from './AdminDashboard'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { useParams } from 'react-router-dom'
 
 const UpdateProduct = () => {
     const [product, setProduct] = useState({ name: '', description: '', category: '', price: '', quantity: '', shipping: '', photo: '' })
@@ -36,7 +37,7 @@ const UpdateProduct = () => {
             productForm.append('photo', product.photo)
             console.log(productForm)
 
-            const res = await axios.post(`http://localhost:8080/api/v1/product/update-product/${id}`,
+            const res = await axios.put(`http://localhost:8080/api/v1/product/update-product/${product._id}`,
                 productForm
             )
             console.log(res)
@@ -50,6 +51,23 @@ const UpdateProduct = () => {
             console.log(error)
         }
 
+    }
+    const { slug } = useParams();
+
+    const getProduct = async () => {
+        try {
+
+            const response = await axios.get(`http://localhost:8080/api/v1/product/get-product/${slug}`);
+
+            if (response.data.success) {
+                setProduct(response.data.product);
+                console.log(response.data.product);
+            } else {
+                console.log("API response indicates failure.");
+            }
+        } catch (error) {
+            console.log("Error:", error);
+        }
     }
 
     const showAllCategory = async () => {
@@ -67,6 +85,7 @@ const UpdateProduct = () => {
     }
     useEffect(() => {
         showAllCategory();
+        getProduct();
 
     }, [])
     return (
@@ -109,9 +128,9 @@ const UpdateProduct = () => {
                                             </tr>
                                             <tr><td className='w-50'>Shipping</td>
                                                 <td><select className='w-50' value={product.shipping} name="shipping" onChange={handleChange} id="shipping">
-                                                    <option value="">Select Shipping</option>
-                                                    <option value="1" >True</option>
-                                                    <option value="0" selected>False</option>
+
+                                                    <option value="1"  >true</option>
+                                                    <option value="0" >false</option>
                                                 </select></td>
                                             </tr>
 
