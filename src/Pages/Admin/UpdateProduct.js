@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react'
 import AdminDashboard from './AdminDashboard'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
 const UpdateProduct = () => {
     const [product, setProduct] = useState({ name: '', description: '', category: '', price: '', quantity: '', shipping: '', photo: '' })
     const [allCategory, setAllCategory] = useState([])
 
+    const [tPhoto, setTphoto] = useState();
 
+
+    const navigate = useNavigate();
     const createSlug = (slug) => {
         const trimmedSlug = slug.trim();
         const newSlug = trimmedSlug.replace(/\s+/g, '-');
@@ -21,7 +24,7 @@ const UpdateProduct = () => {
 
 
     const handleSubmit = async (e) => {
-        console.log(product)
+        // console.log(product)
 
         try {
             e.preventDefault()
@@ -34,8 +37,8 @@ const UpdateProduct = () => {
             productForm.append('quantity', product.quantity)
             productForm.append('price', product.price)
             productForm.append('shipping', product.shipping)
-            productForm.append('photo', product.photo)
-            console.log(productForm)
+            tPhoto && productForm.append('photo', tPhoto)
+            // console.log(productForm)
 
             const res = await axios.put(`http://localhost:8080/api/v1/product/update-product/${product._id}`,
                 productForm
@@ -44,6 +47,7 @@ const UpdateProduct = () => {
             if (res?.data?.success) {
                 toast.success(res.data.message);
                 setProduct({ name: "", description: "", category: "", price: "", quantity: "", photo: "", shipping: "" });
+                navigate('/dashboard/admin/products')
             } else {
                 toast.error(res.data.error);
             }
@@ -124,7 +128,34 @@ const UpdateProduct = () => {
                                                 <td><input type='number' value={product.quantity} name='quantity' onChange={handleChange}></input></td>
                                             </tr>
                                             <tr><td className='w-50'>Photo</td>
-                                                <td><input type='file' name='photo' accept="image/*" onChange={(e) => setProduct({ ...product, photo: e.target.files[0] })} ></input></td>
+
+                                                <td><div style={{ border: '1px solid grey', borderRadius: '8px', lineHeight: '2', cursor: 'pointer' }}><label htmlFor="fileInput" className="custom-file-label">
+                                                    {product.photo ? product.name : 'Upload Photo'}
+                                                </label>
+                                                    <input
+                                                        type="file"
+                                                        id="fileInput"
+                                                        name="photo"
+                                                        accept="image/*"
+                                                        onChange={(e) => {
+                                                            setProduct({ ...product, photo: e.target.files[0] });
+                                                            setTphoto(e.target.files[0]);
+                                                        }}
+                                                        className="custom-file-input"
+                                                        style={{ display: 'none' }}
+
+                                                    /></div>
+
+                                                    {tPhoto ? (<div>
+                                                        <img style={{ height: '100px', objectFit: 'contain' }} className='card-img-top' src={URL.createObjectURL(tPhoto)} alt='Card image cap' />
+                                                    </div>) : (<div>
+                                                        <img style={{ height: '100px', objectFit: 'contain' }} className='card-img-top' src={`http://localhost:8080/api/v1/product/product-photo/${product._id}`} alt='Card image cap' />
+                                                    </div>)
+
+                                                    }
+
+
+                                                </td>
                                             </tr>
                                             <tr><td className='w-50'>Shipping</td>
                                                 <td><select className='w-50' value={product.shipping} name="shipping" onChange={handleChange} id="shipping">
@@ -136,7 +167,7 @@ const UpdateProduct = () => {
 
                                         </tbody>
                                     </table>
-                                    <button type='submit' className='btn-primary'>Create Product</button>
+                                    <button type='submit' className='btn-primary'>Update Product</button>
                                 </form>
                             </div>
                         </div>

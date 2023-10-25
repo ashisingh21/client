@@ -8,15 +8,48 @@ import axios from 'axios';
 function Homepage() {
 
     const [auth, setAuth] = useAuth();
-
-
     const [products, setProducts] = useState([])
+    const [allCategory, setAllCategory] = useState([])
+    const [checked, setChecked] = useState([])
+    const [radio, setRadio] = useState([])
+
+
+    let price = [
+
+        {
+            _id: 0,
+            name: "Below 1000",
+            value: [0, 1000]
+
+        },
+        {
+            _id: 1,
+            name: "1001 to 2500",
+            value: [1001, 2500]
+
+        },
+        {
+            _id: 2,
+            name: "2501 to 5000",
+            value: [2501, 5000]
+
+        },
+        {
+            _id: 3,
+            name: "Above 5000",
+            value: [5000, 1000000000]
+
+        }
+
+    ]
+
+
     const fetchAllProducts = async () => {
         try {
             const res = await axios.get('http://localhost:8080/api/v1/product/get-product')
             if (res.data.success) {
                 setProducts(res.data.products);
-                console.log(products);
+                console.log(res.data.products);
             } else {
                 toast.error(res.data.message);
             }
@@ -24,23 +57,82 @@ function Homepage() {
             console.log(error)
         }
     }
-    useEffect(() => {
-        fetchAllProducts()
-    }, [])
+
+
+    const showAllCategory = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/v1/category/all-category');
+
+            if (response.data.success) {
+                setAllCategory(response.data.categories);
+            } else {
+                console.log("API response indicates failure.");
+            }
+        } catch (error) {
+            console.log("Error:", error);
+        }
+    }
+
+    const filterProducts = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/api/v1/product/filter-products', {
+                checked, radio
+            });
+
+            if (response.data.success) {
+                setProducts(response.data.product);
+                console.log(`products are ${response.data.product}`);
+            } else {
+                console.log("API response indicates failure.");
+            }
+        } catch (error) {
+            console.log("Error:", error);
+        }
+    }
+
+
+    const handleFilter = (value, id) => {
+        // console.log(`value is ${value}, id is ${id}`)
+        let all = [...checked];
+
+        if (value) {
+            // console.log(`all is ${all}`)
+            all.push(id);
+        } else {
+            all = all.filter((c) => c !== id)
+        }
+
+        // console.log(checked);
+        setChecked(all);
+    }
 
     useEffect(() => {
-        console.log(products);
-    }, [products]);
+        showAllCategory();
+        if (!checked.length > 1 || !radio.length) fetchAllProducts();
+    }, [checked.length, radio.length])
+
+    useEffect(() => {
+        if (checked.length > 1 || radio.length) filterProducts();
+    }, [checked, radio]);
 
 
 
     return (
         <>
             <Layout>
-                <div className='container'>
-                    <div className='row'>
+                <div className='container-fluid'>
+                    <div className='row p-4'>
                         <div className='col-md-3'>
-                            <h4>Filters</h4>
+                            <h4>Filter by Category</h4>
+                            {allCategory.map((c) => (
+                                <div key={c._id} className='d-flex'><input className='mx-2' type="checkbox" value={c.name} onChange={(e) => { handleFilter(e.target.checked, c._id) }}></input>{c.name}</div>
+                            ))}
+
+                            <h4 className='mt-4'>Filter by Price</h4>
+                            {price.map((pr) => (
+                                <div key={pr._id} className='d-flex'><input name="price" className='mx-2' type="radio" value={pr.value} onChange={(e) => { setRadio(pr.value) }}></input>{pr.name}</div>
+                            ))}
+                            <button className='my-4 px-3 py-2' onClick={() => window.location.reload()} >Reset Filters</button>
                         </div>
                         <div className='col-md-9'>
                             <h4>All Products</h4>
@@ -48,11 +140,12 @@ function Homepage() {
                                 {products.map((p) => (
                                     <>
                                         <div key={p._id} className='card' style={{ width: '30%', overflow: 'hidden', margin: '6px' }}>
-                                            <img style={{ height: '250px', objectFit: 'contain' }} className='card-img-top' src={`http://localhost:8080/api/v1/product/get-product-photo/${p._id}`} alt='Card image cap' />
+                                            <img style={{ height: '250px', objectFit: 'contain' }} className='card-img-top' src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`} alt='Card image cap' />
                                             <div className='card-body'>
                                                 <h5 className='card-title'>{p.name}</h5>
                                                 <p className='card-text'>{p.description}</p>
-                                                <a href='#' className='btn btn-primary'>Read More</a>
+                                                <p className='card-text'>Category : {p.category.name} | Price : &#8377; {p.price} </p>
+                                                <button href='#' className='py-2 px-4 btn btn-secondary'>Read More</button> <button href='#' className='py-2 px-4 btn btn-primary'>Add to Cart</button>
                                             </div>
                                         </div>
                                     </>
@@ -62,7 +155,7 @@ function Homepage() {
                         </div>
                     </div>
                 </div>
-            </Layout>
+            </Layout >
         </>
     )
 }

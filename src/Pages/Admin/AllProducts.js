@@ -64,10 +64,14 @@ const AllProduct = () => {
                                 <div className='col-md-4 mb-3'>
                                     <div className="card " >
                                         <div className="card-body">
+
                                             <table className='table table-bordered table-striped w-100'>
                                                 <tbody>
                                                     <tr><td className='w-50'>Name</td>
                                                         <td>{p.name}</td>
+                                                    </tr>
+                                                    <tr><td className='w-50'>Photo</td>
+                                                        <td><img style={{ width: '80px' }} src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`} ></img></td>
                                                     </tr>
                                                     <tr><td className='w-50'>description</td>
                                                         <td>{p.description}</td>
