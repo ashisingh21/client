@@ -23,6 +23,8 @@ const AllProduct = () => {
 
     const handleDelete = async (id) => {
         try {
+            let ans = window.confirm('Are you sure?');
+            if (!ans) return;
             const res = await axios.delete(`http://localhost:8080/api/v1/product/delete-product/${id}`)
             if (res?.data?.success) {
                 toast.success(res.data.message);
@@ -40,6 +42,8 @@ const AllProduct = () => {
 
     const handleDeleteAll = async () => {
         try {
+            let ans = window.confirm('Are you sure?');
+            if (!ans) return;
             const res = await axios.delete(`http://localhost:8080/api/v1/product/delete-all-products`)
             if (res?.data?.success) {
                 toast.success(res.data.message);
