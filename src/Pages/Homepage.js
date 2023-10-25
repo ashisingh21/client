@@ -4,6 +4,7 @@ import Layout from '../Components/Layout/Layout'
 import { toast } from 'react-toastify';
 import { useAuth } from '../Context/Auth';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function Homepage() {
 
@@ -12,6 +13,9 @@ function Homepage() {
     const [allCategory, setAllCategory] = useState([])
     const [checked, setChecked] = useState([])
     const [radio, setRadio] = useState([])
+    const [page, setPage] = useState(1);
+    const [count, setCount] = useState(0);
+    const [loading, setLoading] = useState(false);
 
 
     let price = [
@@ -44,11 +48,28 @@ function Homepage() {
     ]
 
 
+    const fetchProductCount = async () => {
+        try {
+            const res = await axios.get(`http://localhost:8080/api/v1/product/product-count`)
+            if (res.data.success) {
+                setCount(res.data.count);
+                console.log(res.data.count);
+            } else {
+                toast.error(res.data.message);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     const fetchAllProducts = async () => {
         try {
-            const res = await axios.get('http://localhost:8080/api/v1/product/get-product')
+            const res = await axios.get(`http://localhost:8080/api/v1/product/product-list/${page}`)
             if (res.data.success) {
+                setLoading(true)
                 setProducts(res.data.products);
+                setLoading(false)
                 console.log(res.data.products);
             } else {
                 toast.error(res.data.message);
@@ -57,6 +78,27 @@ function Homepage() {
             console.log(error)
         }
     }
+
+    const loadMore = async (e) => {
+        try {
+            const res = await axios.get(`http://localhost:8080/api/v1/product/product-list/${page}`)
+            if (res.data.success) {
+                setLoading(true)
+                setProducts([...products, ...res.data.products]);
+                setLoading(false)
+                console.log(res.data.products);
+            } else {
+                toast.error(res.data.message);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        if (page === 1) return;
+        loadMore()
+    }, [page])
 
 
     const showAllCategory = async () => {
@@ -107,9 +149,17 @@ function Homepage() {
     }
 
     useEffect(() => {
+        fetchProductCount()
+    }, [count])
+
+    useEffect(() => {
         showAllCategory();
+    }, [])
+
+    useEffect(() => {
         if (!checked.length > 1 || !radio.length) fetchAllProducts();
     }, [checked.length, radio.length])
+
 
     useEffect(() => {
         if (checked.length > 1 || radio.length) filterProducts();
@@ -152,7 +202,12 @@ function Homepage() {
                                 ))}
 
                             </div>
+                            {products && products.length < count &&
+                                (<div className='col-md-12'><button onClick={
+                                    (e) => { e.preventDefault(); setPage(page + 1); }
+                                }>{loading ? 'Loading...' : 'Load More'}</button></div>)}
                         </div>
+
                     </div>
                 </div>
             </Layout >
