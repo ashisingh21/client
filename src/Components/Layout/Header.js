@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink, Link, useNavigate } from "react-router-dom";
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useAuth } from '../../Context/Auth';
+import SearchBar from '../SearchBar';
 
 function Header() {
     const navigate = useNavigate();
@@ -63,10 +64,7 @@ function Header() {
                                 <NavLink className="nav-link" to={`/dashboard/${auth?.user?.role !== 1 ? 'user' : 'admin'}`}>Dashboard</NavLink>
                             </li>
                         </ul>
-                        <form className="d-flex" role="search">
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button className="btn btn-outline-success" type="submit">Search</button>
-                        </form>
+                        <SearchBar></SearchBar>
                     </div>
                 </div>
             </nav >

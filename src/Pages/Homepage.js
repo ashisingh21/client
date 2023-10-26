@@ -70,7 +70,7 @@ function Homepage() {
                 setLoading(true)
                 setProducts(res.data.products);
                 setLoading(false)
-                console.log(res.data.products);
+                console.log(`all ppp ${res.data.products}`);
             } else {
                 toast.error(res.data.message);
             }
