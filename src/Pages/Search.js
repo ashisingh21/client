@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../Context/Auth';
 import axios from 'axios';
 import { useSearch } from '../Context/Search';
+import { useParams } from 'react-router-dom';
 
 const Search = () => {
     const [products, setProducts] = useState([])
@@ -80,7 +81,22 @@ const Search = () => {
     //     }
 
     // ]
+    let { keyword } = useParams();
+    const handleAutoSearch = async (e) => {
+        try {
+            // let newKeyword = JSON.stringify(mykeyword)
+            console.log(`new is ${keyword}`)
+            const res = await axios.get(`http://localhost:8080/api/v1/product/product-search/${keyword}`)
+            if (res.data.success) {
+                setSearch({ ...search, result: res.data.result })
+                console.log(search.result);
 
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const showAllCategory = async () => {
         try {
@@ -99,7 +115,9 @@ const Search = () => {
 
 
     useEffect(() => {
+        handleAutoSearch();
         showAllCategory();
+        console.log(`after change ${search.result}`)
     }, [])
 
 
