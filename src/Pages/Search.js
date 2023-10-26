@@ -143,7 +143,7 @@ const Search = () => {
                     <div className='col-md-12 text-center'>
                         <h4>All Products</h4>
                         <div className='row d-flex justify-content-center align-items-center'>
-                            {search?.result?.map((p) => (
+                            {search?.result.length < 1 ? (<h5 style={{ marginTop: '180px', color: 'grey' }}>No Items Found</h5>) : search?.result?.map((p) => (
                                 <>
                                     <div key={p._id} className='card' style={{ width: '30%', overflow: 'hidden', margin: '6px' }}>
                                         <img style={{ height: '250px', objectFit: 'contain' }} className='card-img-top' src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`} alt='Card image cap' />
@@ -166,7 +166,7 @@ const Search = () => {
 
                 </div>
             </div>
-        </Layout>
+        </Layout >
     )
 }
 
