@@ -39,8 +39,8 @@ function App() {
           <Route path='admin/users' element={<Users />}></Route>
         </Route>
         <Route path='/contact' element={<Contact />}></Route>
-        <Route path='/product/:id' element={<Product />}></Route>
         <Route path='/product/search/:keyword' element={<Search />}></Route>
+        <Route path='/product/view/:slug' element={<Product />}></Route>
         <Route path='/register' element={<Register />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>
