@@ -18,6 +18,8 @@ import AllProduct from './Pages/Admin/AllProducts';
 import Product from './Pages/Product';
 import UpdateProduct from './Pages/Admin/UpdateProduct';
 import Search from './Pages/Search';
+import Categories from './Pages/Categories';
+import CategoryProducts from './Pages/CategoryProducts';
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
         <Route path='/contact' element={<Contact />}></Route>
         <Route path='/product/search/:keyword' element={<Search />}></Route>
         <Route path='/product/view/:slug' element={<Product />}></Route>
+        <Route path='/all-category' element={<Categories />}></Route>
+        <Route path='/category/:slug' element={<CategoryProducts />}></Route>
         <Route path='/register' element={<Register />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/forgot-password' element={<ForgotPassword />}></Route>

@@ -3,10 +3,13 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useAuth } from '../../Context/Auth';
 import SearchBar from '../SearchBar';
+import useCategory from '../../hooks/useCategory';
 
 function Header() {
     const navigate = useNavigate();
     const [auth, setAuth] = useAuth();
+
+    const allCategory = useCategory();
 
 
     const logout = (e) => {
@@ -18,6 +21,7 @@ function Header() {
 
     return (
         <>
+
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="#">E-commerce</Link>
@@ -44,6 +48,26 @@ function Header() {
                                         <NavLink className="nav-link" onClick={logout}>Logout</NavLink>
                                     </li></>
                             )}
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Category
+                                </a>
+                                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                    <Link className="dropdown-item" to="/all-category">All Category</Link>
+                                    {allCategory?.map((c) => (
+                                        <>
+
+                                            <div className="dropdown-divider"></div>
+                                            <Link className="dropdown-item" to={`/category/${c.name}`}>{c.name}</Link>
+
+
+                                        </>
+                                    ))}
+
+
+                                </div>
+                            </li>
 
 
                             {/* <li className="nav-item dropdown">
@@ -51,6 +75,7 @@ function Header() {
                                     Category
                                 </Link>
                                 <ul className="dropdown-menu">
+
                                     <li><Link className="dropdown-item" to="/login">Login</Link></li>
                                     <li><Link className="dropdown-item" to="#">Another action</Link></li>
                                     <li><hr className="dropdown-divider" /></li>
