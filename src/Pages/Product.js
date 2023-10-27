@@ -98,6 +98,7 @@ const Product = () => {
 
                                 <div className='row'>
                                     <h2 className='py-3'>Similar Product</h2>
+                                    {products.length < 1 && <><h4>No Similar Products found!</h4></>}
                                     {products.map((p) => (
                                         <>
                                             <div key={p._id} className='card' style={{ width: '30%', overflow: 'hidden', margin: '6px' }}>
