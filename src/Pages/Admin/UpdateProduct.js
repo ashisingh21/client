@@ -18,9 +18,12 @@ const UpdateProduct = () => {
         return newSlug;
     }
 
+
     const handleChange = (e) => {
         setProduct({ ...product, [e.target.name]: e.target.value });
     }
+
+
 
 
     const handleSubmit = async (e) => {
@@ -38,12 +41,13 @@ const UpdateProduct = () => {
             productForm.append('price', product.price)
             productForm.append('shipping', product.shipping)
             tPhoto && productForm.append('photo', tPhoto)
-            // console.log(productForm)
+            console.log(productForm)
 
             const res = await axios.put(`http://localhost:8080/api/v1/product/update-product/${product._id}`,
                 productForm
             )
-            console.log(res)
+            console.log(res);
+
             if (res?.data?.success) {
                 toast.success(res.data.message);
                 setProduct({ name: "", description: "", category: "", price: "", quantity: "", photo: "", shipping: "" });
@@ -65,7 +69,8 @@ const UpdateProduct = () => {
 
             if (response.data.success) {
                 setProduct(response.data.product);
-                console.log(response.data.product);
+                console.log(response.data.product)
+
             } else {
                 console.log("API response indicates failure.");
             }
@@ -114,7 +119,7 @@ const UpdateProduct = () => {
                                                 <td><input type='number' name='price' value={product.price} onChange={handleChange}></input></td>
                                             </tr>
                                             <tr><td className='w-50'>Category</td>
-                                                <td><select className='w-50' name="category" value={product.category} onChange={handleChange} id="cars">
+                                                <td><select className='w-50' name="category" value={product.category} onChange={handleChange} id="category">
                                                     <option value="">Select Category</option>
                                                     {allCategory.map((c) => (
                                                         <>

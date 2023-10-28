@@ -21,6 +21,8 @@ import Search from './Pages/Search';
 import Categories from './Pages/Categories';
 import CategoryProducts from './Pages/CategoryProducts';
 import CartPage from './Pages/CartPage';
+import AboutUser from './Pages/User/AboutUser';
+import UpdateProfile from './Pages/User/UpdateProfile';
 
 function App() {
   return (
@@ -31,7 +33,9 @@ function App() {
         <Route path='/' element={<Homepage />}></Route>
         <Route path='/about' element={<About />}></Route>
         <Route path='/dashboard' element={<Private />}>
-          <Route path='user' element={<UserDashboard />}></Route>
+          <Route path='user' element={<AboutUser />}></Route>
+          <Route path='user/update-profile' element={<UpdateProfile />}></Route>
+
         </Route>
         <Route path='/dashboard' element={<AdminRoute />}>
           <Route path='admin' element={<AboutAdmin />}></Route>

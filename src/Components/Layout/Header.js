@@ -14,10 +14,19 @@ function Header() {
     const allCategory = useCategory();
 
 
+    const clearAll = (e) => {
+        e.preventDefault();
+        setAuth({ ...auth, user: null, token: "" });
+        localStorage.clear();
+        navigate('/login');
+
+    }
+
     const logout = (e) => {
         e.preventDefault();
         setAuth({ ...auth, user: null, token: "" });
         localStorage.removeItem('auth');
+        localStorage.removeItem('cartInLocal');
         navigate('/login');
     }
 
@@ -34,6 +43,9 @@ function Header() {
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link active" aria-current="page" onClick={clearAll}>Clear All</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/about">About</NavLink>

@@ -9,7 +9,7 @@ const CartPage = () => {
     const [auth, setAuth] = useAuth()
     const [cart, setCart] = useCart([])
     const [quan, setQuan] = useState(1)
-    const [total, setTotal] = useState(1)
+
     const [delivery, setDelivery] = useState('')
     const navigate = useNavigate()
 
@@ -33,26 +33,27 @@ const CartPage = () => {
         setDelivery(formattedDate)
 
     }
-    const checkTotal = () => {
+    const setTotal = () => {
         let myCart = [...cart];
-        let totalAmount = myCart.reduce((total, product) => total + product.price, 0)
-        setTotal(totalAmount)
-        console.log(total)
+        // let totalAmount = myCart.reduce((total, product) => total + product.price, 0)
+        let totalAmount = 0;
+        myCart.map((c) => { totalAmount = totalAmount + c.price })
+
+        return totalAmount.toLocaleString("en-US", {
+            style: "currency",
+            currency: "INR"
+        });
 
 
     }
 
     useEffect(() => {
-        checkTotal()
+
         checkDelivery()
-    }, [checkTotal])
+    }, [])
 
 
-    const checkSameProduct = () => {
-        let myCart = [...cart];
-        let IndProduct = myCart.filter(item => { return myCart.some(otherItem => otherItem._id === item._id); })
-        console.log(IndProduct)
-    }
+
 
     const removeProduct = (id) => {
         let myCart = [...cart];
@@ -66,7 +67,7 @@ const CartPage = () => {
 
             <div className='container'>
 
-                {auth?.token ? <> <div className='row'>
+                <div className='row'>
                     <div className='col-md-8'>
                         <ul className="m-4 list-group ">
                             {cart?.map((p) => (
@@ -111,19 +112,22 @@ const CartPage = () => {
                     </div>
                     <div className='col-md-4'>
                         <div class="widget p-4 my-3">
-                            <h2 class="widget-title">Order Summary</h2>
+                            <h2 class="widget-title mb-2">Order Summary</h2>
 
-                            <h5>Total Items : {cart.length} Products</h5>
-                            <h3 className='text-bold'>Total : &#8377; {total}</h3>
+                            <h5 className=''>Total Items : {cart.length} Products</h5>
+                            <h3 className='text-bold'>Total : {setTotal()}</h3>
 
                             <h5 style={{ fontSize: '13px' }} className='text-bold'>Expected Delivery : {delivery}</h5>
-                            <button>Proceed to Checkout</button>
+
+                            {auth?.token ? <><button className='py-3 px-4  my-4 '>Proceed to Checkout</button></> : <><button onClick={(e) => navigate('/login')} className='py-3 px-4  my-4 '>Login to Checkout</button></>}
+
                         </div>
 
 
                     </div>
-                </div></> : <><h2>Please Login to Checkout</h2>
-                    <button className='btn btn-lg text-bold' onClick={() => { navigate('/login') }}>Login Now</button></>}
+                </div>
+                {/* </> : <><h2>Please Login to Checkout</h2>
+                    <button className='btn text-bold' onClick={() => { navigate('/login') }}>Login Now</button></>} */}
 
             </div>
 

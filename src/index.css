@@ -258,6 +258,16 @@ h1,button{
 }
 
 
+/* read only */
+input[readonly],input[readonly]:focus {
+  background-color: #f0f0f0;
+  color: #666;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+
 
 
 
