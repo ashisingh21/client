@@ -4,10 +4,12 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAuth } from '../../Context/Auth';
 import SearchBar from '../SearchBar';
 import useCategory from '../../hooks/useCategory';
+import { useCart } from '../../Context/Cart';
 
 function Header() {
     const navigate = useNavigate();
     const [auth, setAuth] = useAuth();
+    const [cart, setCart] = useCart();
 
     const allCategory = useCategory();
 
@@ -82,11 +84,16 @@ function Header() {
                                     <li><Link className="dropdown-item" to="#">Something else here</Link></li>
                                 </ul>
                             </li> */}
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <NavLink className="nav-link" to="/contact">Contact</NavLink>
-                            </li>
+                            </li> */}
                             <li className="nav-item">
                                 <NavLink className="nav-link" to={`/dashboard/${auth?.user?.role !== 1 ? 'user' : 'admin'}`}>Dashboard</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink style={{ position: 'relative' }} className="nav-link" to={`/cart`}>Cart<span style={{ fontSize: '11px', display: 'inline', position: 'relative', top: '-4px' }} className="badge bg-danger">{cart.length}</span>
+
+                                </NavLink>
                             </li>
                         </ul>
                         <SearchBar></SearchBar>

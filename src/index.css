@@ -254,5 +254,11 @@ h1,button{
 }
 
 .card{
-  overflow: scroll;
+  overflow: auto;
 }
+
+
+
+
+
+

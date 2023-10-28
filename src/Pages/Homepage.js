@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../Context/Auth';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useCart } from '../Context/Cart';
 
 function Homepage() {
 
@@ -17,6 +18,7 @@ function Homepage() {
     const [count, setCount] = useState(0);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
+    const [cart, setCart] = useCart([])
 
     let price = [
 
@@ -161,6 +163,10 @@ function Homepage() {
         fetchProductCount()
     }, [count])
 
+    // useEffect(() => {
+    //     fetchProductCount()
+    // }, [count])
+
     useEffect(() => {
         showAllCategory();
     }, [])
@@ -204,9 +210,15 @@ function Homepage() {
                                                 <h5 className='card-title'>{p.name}</h5>
                                                 <p className='card-text'>{p.description}</p>
                                                 <p className='card-text'>Category : {p.category.name} | Price : &#8377; {p.price} </p>
-                                                <button href='#' onClick={e => handleViewProduct(p.slug)} className='py-2 px-4 btn btn-secondary'>Read More</button> <button href='#' className='py-2 px-4 btn btn-primary'>Add to Cart</button>
+                                                <button href='#' onClick={e => handleViewProduct(p.slug)} className='py-2 px-4 btn btn-secondary'>Read More</button> <button onClick={() => {
+                                                    toast.success('Item added to cart');
+                                                    setCart([...cart, p])
+
+                                                    localStorage.setItem('cartInLocal', JSON.stringify([...cart, p]));
+
+                                                }} href='#' className='py-2 px-4 btn btn-primary'>Add to Cart</button>
                                             </div>
-                                        </div>
+                                        </div >
                                     </>
                                 ))}
 

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../Components/Layout/Layout'
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const CategoryProducts = () => {
   const [products, setProducts] = useState([])
 
-  const { slug } = useParams()
+  const params = useParams()
+  const navigate = useNavigate()
 
   const showCategoryProducts = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/product/category/${slug}`);
+      const response = await axios.get(`http://localhost:8080/api/v1/product/category/${params.slug}`);
 
       if (response.data.success) {
         setProducts(response.data.products);
@@ -22,10 +23,17 @@ const CategoryProducts = () => {
       console.log("Error:", error);
     }
   }
+  const handleViewProduct = (slug) => {
+    try {
+      navigate(`/product/view/${slug}`)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
-    showCategoryProducts()
-  }, [slug])
+    params.slug && showCategoryProducts()
+  }, [params.slug])
 
 
   return (
@@ -57,7 +65,7 @@ const CategoryProducts = () => {
                       <h5 className='card-title'>{p.name}</h5>
                       <p className='card-text'>{p.description}</p>
                       <p className='card-text'>Category : {p.category.name} | Price : &#8377; {p.price} </p>
-                      <button href='#' className='py-2 px-4 btn btn-secondary'>Read More</button> <button href='#' className='py-2 px-4 btn btn-primary'>Add to Cart</button>
+                      <button href='#' onClick={e => handleViewProduct(p.slug)} className='py-2 px-4 btn btn-secondary'>Read More</button> <button href='#' className='py-2 px-4 btn btn-primary'>Add to Cart</button>
                     </div>
                   </div>
                 </>
