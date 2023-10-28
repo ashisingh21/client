@@ -43,6 +43,7 @@ function App() {
           <Route path='admin/products' element={<AllProduct />}></Route>
           <Route path='admin/update/:slug' element={<UpdateProduct />}></Route>
           <Route path='admin/create-product' element={<CreateProduct />}></Route>
+
           <Route path='admin/users' element={<Users />}></Route>
         </Route>
         <Route path='/contact' element={<Contact />}></Route>

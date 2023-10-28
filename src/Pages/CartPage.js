@@ -14,8 +14,6 @@ const CartPage = () => {
     const navigate = useNavigate()
 
 
-
-
     const checkDelivery = () => {
         // Create a new Date object to represent the current date and time
         const today = new Date();
@@ -31,8 +29,9 @@ const CartPage = () => {
         // Format the date as a string (in the format YYYY-MM-DD)
         const formattedDate = `${day.toString().padStart(2, '0')}-${allMonth[month]}-${year}`;
         setDelivery(formattedDate)
-
     }
+
+
     const setTotal = () => {
         let myCart = [...cart];
         // let totalAmount = myCart.reduce((total, product) => total + product.price, 0)
@@ -48,7 +47,6 @@ const CartPage = () => {
     }
 
     useEffect(() => {
-
         checkDelivery()
     }, [])
 
@@ -119,6 +117,9 @@ const CartPage = () => {
 
                             <h5 style={{ fontSize: '13px' }} className='text-bold'>Expected Delivery : {delivery}</h5>
 
+                            <h5 className=''>Current Address : {auth?.user.address} </h5>
+                            <button onClick={(e) => navigate('/dashboard/user/update-profile')} className='btn btn-warning'>Update Address</button><br></br>
+
                             {auth?.token ? <><button className='py-3 px-4  my-4 '>Proceed to Checkout</button></> : <><button onClick={(e) => navigate('/login')} className='py-3 px-4  my-4 '>Login to Checkout</button></>}
 
                         </div>
@@ -126,8 +127,7 @@ const CartPage = () => {
 
                     </div>
                 </div>
-                {/* </> : <><h2>Please Login to Checkout</h2>
-                    <button className='btn text-bold' onClick={() => { navigate('/login') }}>Login Now</button></>} */}
+
 
             </div>
 
