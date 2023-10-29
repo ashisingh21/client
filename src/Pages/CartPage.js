@@ -36,10 +36,6 @@ const CartPage = () => {
                 cart,
                 user
             });
-            if (data) {
-
-                alert('fifoejofeofo')
-            }
             setLoading(false);
             localStorage.removeItem("cartInLocal");
             setCart([]);

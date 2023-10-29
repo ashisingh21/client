@@ -23,6 +23,8 @@ import CategoryProducts from './Pages/CategoryProducts';
 import CartPage from './Pages/CartPage';
 import AboutUser from './Pages/User/AboutUser';
 import UpdateProfile from './Pages/User/UpdateProfile';
+import Orders from './Pages/User/Orders';
+import AdminOrders from './Pages/Admin/AdminOrders';
 
 function App() {
   return (
@@ -35,10 +37,12 @@ function App() {
         <Route path='/dashboard' element={<Private />}>
           <Route path='user' element={<AboutUser />}></Route>
           <Route path='user/update-profile' element={<UpdateProfile />}></Route>
+          <Route path='user/orders' element={<Orders />}></Route>
 
         </Route>
         <Route path='/dashboard' element={<AdminRoute />}>
           <Route path='admin' element={<AboutAdmin />}></Route>
+          <Route path='admin/orders' element={<AdminOrders />}></Route>
           <Route path='admin/create-category' element={<CreateCategory />}></Route>
           <Route path='admin/products' element={<AllProduct />}></Route>
           <Route path='admin/update/:slug' element={<UpdateProduct />}></Route>

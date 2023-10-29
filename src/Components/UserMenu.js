@@ -9,6 +9,7 @@ const UserMenu = () => {
                     Profile
                 </Link>
                 <Link to="/dashboard/user/update-profile" className="list-group-item list-group-item-action">Update Profile</Link>
+                <Link to="/dashboard/user/orders" className="list-group-item list-group-item-action">Orders</Link>
 
                 {/* <Link to="/dashboard/admin/d" className="list-group-item list-group-item-action disabled">Vestibulum at eros</Link> */}
             </div>

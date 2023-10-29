@@ -13,6 +13,7 @@ const AdminMenu = () => {
                 <Link to="/dashboard/admin/products" className="list-group-item list-group-item-action">All Products</Link>
                 <Link to="/dashboard/admin/users" className="list-group-item list-group-item-action">All Users</Link>
                 <Link to="/dashboard/user/update-profile" className="list-group-item list-group-item-action">Update Profile</Link>
+                <Link to="/dashboard/admin/orders" className="list-group-item list-group-item-action">Orders</Link>
                 {/* <Link to="/dashboard/admin/d" className="list-group-item list-group-item-action disabled">Vestibulum at eros</Link> */}
             </div>
 
