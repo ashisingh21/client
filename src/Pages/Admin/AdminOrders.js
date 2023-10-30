@@ -3,10 +3,13 @@ import moment from 'moment'
 import { useAuth } from '../../Context/Auth'
 import axios from 'axios';
 import AdminDashboard from './AdminDashboard';
+import { toast } from 'react-toastify';
 
 const AdminOrders = () => {
     const [auth] = useAuth();
     const [orders, setOrders] = useState([])
+    const [status, setStatus] = useState(["Not Process", "Processing", "Shipped", "Delivered", "Canceled"])
+
 
     const fetchOrders = async () => {
         try {
@@ -21,6 +24,47 @@ const AdminOrders = () => {
         }
 
     }
+
+    const handleStatusChange = async (event, orderId) => {
+        try {
+
+
+            const newStatus = event.target.value;
+
+            // Update the status in the local state
+            // setOrders(prevOrders => {
+            //     return prevOrders.map(order => {
+            //         if (order._id === orderId) {
+            //             return { ...order, status: newStatus };
+            //         }
+            //         return order;
+            //     });
+            // })
+
+            // const { data } = await axios.put('http://localhost:8080/api/v1/auth/order-status-update', {
+            //     id: orderId,
+            //     newStatus
+            // })
+            // if (data) {
+            //     toast(data.message)
+            // }
+
+            // approach 2
+            const { data } = await axios.put(`http://localhost:8080/api/v1/auth/order-status-update/${orderId}`, {
+                newStatus
+            })
+            if (data) {
+                toast(data.message)
+                fetchOrders()
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+
+
     useEffect(() => {
         if (auth?.token) { fetchOrders() }
     }, [auth?.token])
@@ -48,7 +92,18 @@ const AdminOrders = () => {
                                         <tbody>
                                             <tr>
                                                 <td>{i + 1}</td>
-                                                <td>{o?.status}</td>
+                                                <td><select onChange={(e) => handleStatusChange(e, o._id)} defaultValue={o?.status}>
+
+                                                    {status?.map((s, i) => (
+
+                                                        <option key={i} value={s}>{s}</option>
+
+                                                    ))}
+
+
+
+
+                                                </select></td>
                                                 <td>{o?.buyer?.name}</td>
                                                 <td>{moment(o?.createAt).fromNow()}</td>
                                                 <td>{o?.payment.success ? "Success" : "Failed"}</td>
