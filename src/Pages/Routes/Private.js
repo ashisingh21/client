@@ -11,7 +11,7 @@ const Private = () => {
 
     useEffect(() => {
         const checkAuth = async () => {
-            const res = await axios.get('http://localhost:8080/api/v1/auth/user-auth', {
+            const res = await axios.get('/api/v1/auth/user-auth', {
                 headers: {
                     token: auth?.token
                 }

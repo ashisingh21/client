@@ -43,7 +43,7 @@ const UpdateProduct = () => {
             tPhoto && productForm.append('photo', tPhoto)
             console.log(productForm)
 
-            const res = await axios.put(`http://localhost:8080/api/v1/product/update-product/${product._id}`,
+            const res = await axios.put(`/api/v1/product/update-product/${product._id}`,
                 productForm
             )
             console.log(res);
@@ -65,7 +65,7 @@ const UpdateProduct = () => {
     const getProduct = async () => {
         try {
 
-            const response = await axios.get(`http://localhost:8080/api/v1/product/get-product/${slug}`);
+            const response = await axios.get(`/api/v1/product/get-product/${slug}`);
 
             if (response.data.success) {
                 setProduct(response.data.product);
@@ -81,7 +81,7 @@ const UpdateProduct = () => {
 
     const showAllCategory = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/v1/category/all-category');
+            const response = await axios.get('/api/v1/category/all-category');
 
             if (response.data.success) {
                 setAllCategory(response.data.categories);
@@ -154,7 +154,7 @@ const UpdateProduct = () => {
                                                     {tPhoto ? (<div>
                                                         <img style={{ height: '100px', objectFit: 'contain' }} className='card-img-top' src={URL.createObjectURL(tPhoto)} alt='Card image cap' />
                                                     </div>) : (<div>
-                                                        <img style={{ height: '100px', objectFit: 'contain' }} className='card-img-top' src={`http://localhost:8080/api/v1/product/product-photo/${product._id}`} alt='Card image cap' />
+                                                        <img style={{ height: '100px', objectFit: 'contain' }} className='card-img-top' src={`/api/v1/product/product-photo/${product._id}`} alt='Card image cap' />
                                                     </div>)
 
                                                     }

@@ -23,7 +23,7 @@ const CreateCategory = () => {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault()
-            const res = await axios.post('http://localhost:8080/api/v1/category/create-category', {
+            const res = await axios.post('/api/v1/category/create-category', {
                 name: category.name, slug: category.slug
             })
             if (res?.data?.success) {
@@ -43,7 +43,7 @@ const CreateCategory = () => {
 
     const handleDelete = async (id) => {
         try {
-            const res = await axios.delete(`http://localhost:8080/api/v1/category/delete-category/${id}`)
+            const res = await axios.delete(`/api/v1/category/delete-category/${id}`)
             if (res?.data?.success) {
                 toast.success(res.data.message);
                 showAllCategory()
@@ -59,7 +59,7 @@ const CreateCategory = () => {
 
     const handleDeleteAll = async () => {
         try {
-            const res = await axios.delete(`http://localhost:8080/api/v1/category/delete-all-category`)
+            const res = await axios.delete(`/api/v1/category/delete-all-category`)
             if (res?.data?.success) {
                 toast.success(res.data.message);
                 showAllCategory()
@@ -86,7 +86,7 @@ const CreateCategory = () => {
         setHeading('create category');
         try {
             const id = selectedId;
-            const res = await axios.put(`http://localhost:8080/api/v1/category/update-category/${id}`, {
+            const res = await axios.put(`/api/v1/category/update-category/${id}`, {
                 name: category.name
             })
             if (res?.data?.success) {
@@ -105,7 +105,7 @@ const CreateCategory = () => {
 
     const showAllCategory = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/v1/category/all-category');
+            const response = await axios.get('/api/v1/category/all-category');
 
             if (response.data.success) {
                 setAllCategory(response.data.categories);

@@ -14,7 +14,7 @@ const Product = () => {
 
     const fetchProduct = async () => {
         try {
-            const res = await axios.get(`http://localhost:8080/api/v1/product/get-product/${slug}`)
+            const res = await axios.get(`/api/v1/product/get-product/${slug}`)
             if (res.data.success) {
                 setProduct(res.data.product);
 
@@ -27,7 +27,7 @@ const Product = () => {
     }
     const fetchSimilarProduct = async () => {
         try {
-            const res = await axios.get(`http://localhost:8080/api/v1/product/product-similar/${slug}`)
+            const res = await axios.get(`/api/v1/product/product-similar/${slug}`)
             if (res.data.success) {
                 setProducts(res.data.products);
 
@@ -82,7 +82,7 @@ const Product = () => {
                                                     <td>{product.quantity}</td>
                                                 </tr>
                                                 <tr><td className='w-50'>Photo</td>
-                                                    <img style={{ height: '250px', objectFit: 'contain' }} className='card-img-top' src={`http://localhost:8080/api/v1/product/product-photo/${product._id}`} alt='Card image cap' />
+                                                    <img style={{ height: '250px', objectFit: 'contain' }} className='card-img-top' src={`/api/v1/product/product-photo/${product._id}`} alt='Card image cap' />
 
                                                 </tr>
                                                 <tr><td className='w-50'>Shipping</td>
@@ -102,7 +102,7 @@ const Product = () => {
                                     {products.map((p) => (
                                         <>
                                             <div key={p._id} className='card' style={{ width: '30%', overflow: 'hidden', margin: '6px' }}>
-                                                <img style={{ height: '250px', objectFit: 'contain' }} className='card-img-top' src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`} alt='Card image cap' />
+                                                <img style={{ height: '250px', objectFit: 'contain' }} className='card-img-top' src={`/api/v1/product/product-photo/${p._id}`} alt='Card image cap' />
                                                 <div className='card-body'>
                                                     <h5 className='card-title'>{p.name}</h5>
                                                     <p className='card-text'>{p.description}</p>

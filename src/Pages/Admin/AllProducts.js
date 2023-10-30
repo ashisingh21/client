@@ -7,7 +7,7 @@ const AllProduct = () => {
     const [products, setProducts] = useState([])
     const fetchAllProducts = async () => {
         try {
-            const res = await axios.get('http://localhost:8080/api/v1/product/get-product')
+            const res = await axios.get('/api/v1/product/get-product')
             if (res.data.success) {
                 setProducts(res.data.products)
             } else {
@@ -25,7 +25,7 @@ const AllProduct = () => {
         try {
             let ans = window.confirm('Are you sure?');
             if (!ans) return;
-            const res = await axios.delete(`http://localhost:8080/api/v1/product/delete-product/${id}`)
+            const res = await axios.delete(`/api/v1/product/delete-product/${id}`)
             if (res?.data?.success) {
                 toast.success(res.data.message);
                 fetchAllProducts()
@@ -44,7 +44,7 @@ const AllProduct = () => {
         try {
             let ans = window.confirm('Are you sure?');
             if (!ans) return;
-            const res = await axios.delete(`http://localhost:8080/api/v1/product/delete-all-products`)
+            const res = await axios.delete(`/api/v1/product/delete-all-products`)
             if (res?.data?.success) {
                 toast.success(res.data.message);
                 fetchAllProducts()
@@ -75,7 +75,7 @@ const AllProduct = () => {
                                                         <td>{p.name}</td>
                                                     </tr>
                                                     <tr><td className='w-50'>Photo</td>
-                                                        <td><img style={{ width: '80px' }} src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`} ></img></td>
+                                                        <td><img style={{ width: '80px' }} src={`/api/v1/product/product-photo/${p._id}`} ></img></td>
                                                     </tr>
                                                     <tr><td className='w-50'>description</td>
                                                         <td>{p.description}</td>

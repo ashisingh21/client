@@ -11,7 +11,7 @@ const Users = () => {
 
     const handleDelete = async (id) => {
         try {
-            const res = await axios.delete(`http://localhost:8080/api/v1/auth/delete-user/${id}`)
+            const res = await axios.delete(`/api/v1/auth/delete-user/${id}`)
             if (res?.data?.success) {
                 toast.success(res.data.message);
                 fetchAllUsers()
@@ -27,7 +27,7 @@ const Users = () => {
 
     const fetchAllUsers = async () => {
         try {
-            const res = await axios.get('http://localhost:8080/api/v1/auth/all-user')
+            const res = await axios.get('/api/v1/auth/all-user')
             if (res.data.success) {
                 setUser(res.data.users)
             } else {

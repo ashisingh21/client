@@ -9,7 +9,7 @@ const SearchBar = () => {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const res = await axios.get(`http://localhost:8080/api/v1/product/product-search/${search.keyword}`)
+            const res = await axios.get(`/api/v1/product/product-search/${search.keyword}`)
             if (res.data.success) {
                 setSearch({ ...search, result: res.data.result })
                 navigate(`/product/search/${search.keyword}`)

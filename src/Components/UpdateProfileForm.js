@@ -20,7 +20,7 @@ const UpdateProfileForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.put(`http://localhost:8080/api/v1/auth/update`, {
+            const res = await axios.put(`/api/v1/auth/update`, {
                 name: credentials.name,
                 email: credentials.email,
                 phone: credentials.phone,

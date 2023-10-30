@@ -11,7 +11,7 @@ const CategoryProducts = () => {
 
   const showCategoryProducts = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/product/category/${params.slug}`);
+      const response = await axios.get(`/api/v1/product/category/${params.slug}`);
 
       if (response.data.success) {
         setProducts(response.data.products);
@@ -60,7 +60,7 @@ const CategoryProducts = () => {
               {products?.map((p) => (
                 <>
                   <div key={p._id} className='card' style={{ width: '30%', overflow: 'hidden', margin: '6px' }}>
-                    <img style={{ height: '250px', objectFit: 'contain' }} className='card-img-top' src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`} alt='Card image cap' />
+                    <img style={{ height: '250px', objectFit: 'contain' }} className='card-img-top' src={`/api/v1/product/product-photo/${p._id}`} alt='Card image cap' />
                     <div className='card-body'>
                       <h5 className='card-title'>{p.name}</h5>
                       <p className='card-text'>{p.description}</p>

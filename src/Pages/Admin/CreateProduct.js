@@ -36,7 +36,7 @@ const CreateProduct = () => {
             productForm.append('photo', product.photo)
             console.log(productForm)
 
-            const res = await axios.post('http://localhost:8080/api/v1/product/create-product',
+            const res = await axios.post('/api/v1/product/create-product',
                 productForm
             )
             console.log(res)
@@ -54,7 +54,7 @@ const CreateProduct = () => {
 
     const showAllCategory = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/v1/category/all-category');
+            const response = await axios.get('/api/v1/category/all-category');
 
             if (response.data.success) {
                 setAllCategory(response.data.categories);

@@ -20,7 +20,7 @@ const CartPage = () => {
 
 
     const getToken = async () => {
-        const { data } = await axios.get(`http://localhost:8080/api/v1/product/braintree/token`)
+        const { data } = await axios.get(`/api/v1/product/braintree/token`)
         if (data) {
             setClientToken(data.clientToken);
         }
@@ -31,7 +31,7 @@ const CartPage = () => {
             setLoading(true);
             const user = auth.user._id
             const { nonce } = await instance.requestPaymentMethod();
-            const { data } = await axios.post("http://localhost:8080/api/v1/product/braintree/payment", {
+            const { data } = await axios.post("/api/v1/product/braintree/payment", {
                 nonce,
                 cart,
                 user
@@ -109,7 +109,7 @@ const CartPage = () => {
                             {cart?.map((p) => (
                                 <li className="list-group-item shadow my-4">
                                     <div className="d-flex media align-items-lg-center flex-column flex-lg-row p-3">
-                                        <img src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`} alt="Generic placeholder image" width={200} className="ml-lg-5 " />
+                                        <img src={`/api/v1/product/product-photo/${p._id}`} alt="Generic placeholder image" width={200} className="ml-lg-5 " />
                                         <div className="media-body px-2">
                                             <h5 className="mt-0 font-weight-bold mb-2">{p.name}</h5>
                                             <h6 className="font-weight-bold my-2">Category:  {p.category.name}</h6>
@@ -135,7 +135,7 @@ const CartPage = () => {
                                 </li>
 
                                 // <div className='card d-flex p-3 my-4'>
-                                //     <img style={{ width: '250px', height: '250px', objectFit: 'contain' }} className='card-img-top' src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`} alt='Card image cap' />
+                                //     <img style={{ width: '250px', height: '250px', objectFit: 'contain' }} className='card-img-top' src={`/api/v1/product/product-photo/${p._id}`} alt='Card image cap' />
 
                                 //     <div className='w-75'>
                                 //         <div>{p.name}</div>

@@ -20,7 +20,7 @@ const Search = () => {
     {/* below code is for filters */ }
     // const filterProducts = async () => {
     //     try {
-    //         const response = await axios.post('http://localhost:8080/api/v1/product/filter-products', {
+    //         const response = await axios.post('/api/v1/product/filter-products', {
     //             checked, radio
     //         });
 
@@ -86,7 +86,7 @@ const Search = () => {
         try {
             // let newKeyword = JSON.stringify(mykeyword)
             console.log(`new is ${keyword}`)
-            const res = await axios.get(`http://localhost:8080/api/v1/product/product-search/${keyword}`)
+            const res = await axios.get(`/api/v1/product/product-search/${keyword}`)
             if (res.data.success) {
                 setSearch({ ...search, result: res.data.result })
                 console.log(search.result);
@@ -100,7 +100,7 @@ const Search = () => {
 
     const showAllCategory = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/v1/category/all-category');
+            const response = await axios.get('/api/v1/category/all-category');
 
             if (response.data.success) {
                 setAllCategory(response.data.categories);
@@ -146,7 +146,7 @@ const Search = () => {
                             {search?.result.length < 1 ? (<h5 style={{ marginTop: '180px', color: 'grey' }}>No Items Found</h5>) : search?.result?.map((p) => (
                                 <>
                                     <div key={p._id} className='card' style={{ width: '30%', overflow: 'hidden', margin: '6px' }}>
-                                        <img style={{ height: '250px', objectFit: 'contain' }} className='card-img-top' src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`} alt='Card image cap' />
+                                        <img style={{ height: '250px', objectFit: 'contain' }} className='card-img-top' src={`/api/v1/product/product-photo/${p._id}`} alt='Card image cap' />
                                         <div className='card-body'>
                                             <h5 className='card-title'>{p.name}</h5>
                                             <p className='card-text'>{p.description}</p>

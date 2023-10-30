@@ -8,7 +8,7 @@ export default function useCategory() {
 
     const showAllCategory = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/v1/category/all-category');
+            const response = await axios.get('/api/v1/category/all-category');
 
             if (response.data.success) {
                 setAllCategory(response.data.categories);

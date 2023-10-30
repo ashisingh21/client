@@ -52,7 +52,7 @@ function Homepage() {
 
     const fetchProductCount = async () => {
         try {
-            const res = await axios.get(`http://localhost:8080/api/v1/product/product-count`)
+            const res = await axios.get(`/api/v1/product/product-count`)
             if (res.data.success) {
                 setCount(res.data.count);
                 console.log(res.data.count);
@@ -67,7 +67,7 @@ function Homepage() {
 
     const fetchAllProducts = async () => {
         try {
-            const res = await axios.get(`http://localhost:8080/api/v1/product/product-list/${page}`)
+            const res = await axios.get(`/api/v1/product/product-list/${page}`)
             if (res.data.success) {
                 setLoading(true)
                 setProducts(res.data.products);
@@ -83,7 +83,7 @@ function Homepage() {
 
     const loadMore = async (e) => {
         try {
-            const res = await axios.get(`http://localhost:8080/api/v1/product/product-list/${page}`)
+            const res = await axios.get(`/api/v1/product/product-list/${page}`)
             if (res.data.success) {
                 setLoading(true)
                 setProducts([...products, ...res.data.products]);
@@ -105,7 +105,7 @@ function Homepage() {
 
     const showAllCategory = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/v1/category/all-category');
+            const response = await axios.get('/api/v1/category/all-category');
 
             if (response.data.success) {
                 setAllCategory(response.data.categories);
@@ -119,7 +119,7 @@ function Homepage() {
 
     const filterProducts = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/product/filter-products', {
+            const response = await axios.post('/api/v1/product/filter-products', {
                 checked, radio
             });
 
@@ -205,7 +205,7 @@ function Homepage() {
                                 {products.map((p) => (
                                     <>
                                         <div key={p._id} className='card' style={{ width: '30%', overflow: 'hidden', margin: '6px' }}>
-                                            <img style={{ height: '250px', objectFit: 'contain' }} className='card-img-top' src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`} alt='Card image cap' />
+                                            <img style={{ height: '250px', objectFit: 'contain' }} className='card-img-top' src={`/api/v1/product/product-photo/${p._id}`} alt='Card image cap' />
                                             <div className='card-body'>
                                                 <h5 className='card-title'>{p.name}</h5>
                                                 <p className='card-text'>{p.description}</p>

@@ -13,7 +13,7 @@ const AdminOrders = () => {
 
     const fetchOrders = async () => {
         try {
-            const res = await axios.get('http://localhost:8080/api/v1/auth/all-order-data'
+            const res = await axios.get('/api/v1/auth/all-order-data'
             )
             if (res) {
                 setOrders(res.data.orders)
@@ -41,7 +41,7 @@ const AdminOrders = () => {
             //     });
             // })
 
-            // const { data } = await axios.put('http://localhost:8080/api/v1/auth/order-status-update', {
+            // const { data } = await axios.put('/api/v1/auth/order-status-update', {
             //     id: orderId,
             //     newStatus
             // })
@@ -50,7 +50,7 @@ const AdminOrders = () => {
             // }
 
             // approach 2
-            const { data } = await axios.put(`http://localhost:8080/api/v1/auth/order-status-update/${orderId}`, {
+            const { data } = await axios.put(`/api/v1/auth/order-status-update/${orderId}`, {
                 newStatus
             })
             if (data) {
@@ -116,7 +116,7 @@ const AdminOrders = () => {
                                             <div className="row mb-2 p-3 card flex-row" key={p._id}>
                                                 <div className="col-md-4">
                                                     <img
-                                                        src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
+                                                        src={`/api/v1/product/product-photo/${p._id}`}
                                                         className="card-img-top"
                                                         alt={p.name}
                                                         style={{ objectFit: 'contain' }}
